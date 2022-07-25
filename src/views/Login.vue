@@ -37,8 +37,8 @@ export default {
         if (this.idUser.length > 10) {
           this.$toast.error("Error! User ID must not contain more than 10 characters.");
         } else {
-          this.$store.commit("modificarIdUsuario", this.idUser);
-          this.$store.commit("cargarTransacciones");
+          this.$store.commit("newUser", this.idUser);
+          this.$store.commit("insertTransactions");
           this.$router.push("/transactions");
         }
       }
