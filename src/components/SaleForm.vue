@@ -43,7 +43,7 @@
           required
         />
       </div>
-      <button class="btn" type="submit" @click="saleCripto">SELL</button>
+      <button class="btn" type="submit" @click.prevent="saleCripto">SELL</button>
     </form>
   </div>
 </template>
