@@ -12,6 +12,7 @@
             v-model="idUser"
             id="idUsuario"
             placeholder="Insert your ID"
+            autocomplete="off"
           />
         </div>
         <button class="btn mt-3" @click="enter">LOGIN</button>
@@ -21,7 +22,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Login",
   data() {
@@ -39,7 +39,7 @@ export default {
         } else {
           this.$store.commit("newUser", this.idUser);
           this.$store.commit("insertTransactions");
-          this.$router.push("/transactions");
+          this.$router.push({ name: "Transactions" });
         }
       }
     },

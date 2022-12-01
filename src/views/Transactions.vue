@@ -10,6 +10,9 @@
         <SaleForm />
       </div>
     </div>
+    <div>
+      <button class="btn" @click="enter">VIEW HISTORY</button>
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,11 @@ export default {
   components: { PurchaseForm, SaleForm },
   data() {
     return {};
+  },
+  methods: {
+    enter() {
+      this.$router.push("/history");
+    },
   },
 };
 </script>
@@ -42,5 +50,19 @@ export default {
   border-radius: 15px;
   background: #a6d7fd;
   color: #090274;
+}
+.btn {
+  box-shadow: none;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  opacity: 0.8;
+  text-align: center;
+  background-color: #0a70a0;
+  color: #fff;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
 }
 </style>

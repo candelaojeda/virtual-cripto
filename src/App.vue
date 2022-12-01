@@ -1,17 +1,36 @@
 <template>
-  <nav>
-    <router-link to="/">Login</router-link> |
-    <router-link to="/transactions">Purchase-Sale</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view></router-view>
+  <div>
+    <nav>
+      <router-link to="/transactions">Purchase-Sale</router-link> |
+      <router-link to="/history">View History</router-link> |
+      <router-link to="/status">Actual Status</router-link>
+      <div class="right">
+        <p>
+          <b>#{{ $store.state.idUser }}</b>
+        </p>
+        <button v-on:click="back()">BACK</button>
+      </div>
+    </nav>
+
+    <router-view></router-view>
+  </div>
 </template>
 <script>
-  export default  {
-    data() {
-      return {};
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    back() {
+      this.$router.push("/");
+    },
+  },
+  created() {
+    if (this.$store.state.idUser == "") {
+      this.$router.push({ name: "login" });
     }
-  }
+  },
+};
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
@@ -40,7 +59,7 @@
   background-size: cover;
   z-index: 0;
 }
-.body {
+/* .body {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -51,7 +70,7 @@
   background-image: url("./assets/img-logo.avif");
   background-size: cover;
   z-index: 0;
-}
+} */
 nav {
   padding: 30px;
 }
@@ -60,6 +79,44 @@ nav a {
   color: #2c3e50;
 }
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #0a70a0;
 }
+.right {
+  display: flex;
+  flex-direction: row;
+  align-content: right;
+  text-align: right;
+  justify-content: right;
+  margin-top: 0px;
+}
+p {
+  padding: 10px;
+}
+button {
+  padding: 10px;
+  height: 40px;
+  width: 70px;
+  background-color: #0a70a0;
+  opacity: 0.8;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+}
+/* .btn {
+  box-shadow: none;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  opacity: 0.8;
+  text-align: center;
+  background-color: #0a70a0;
+  color: #fff;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+} */
 </style>
