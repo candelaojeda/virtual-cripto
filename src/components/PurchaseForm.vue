@@ -9,7 +9,7 @@
             v-model="sellBuy.crypto_code"
             @change="getAgencies(sellBuy.crypto_code)"
           >
-            <option value="" disabled selected hidden>Select cripto</option>
+            <option value="" disabled selected hidden>SELECT CRIPTO</option>
             <option value="BTC">BITCOIN</option>
             <option value="ETH">ETHEREUM</option>
             <option value="USDC">USDC</option>
@@ -25,7 +25,7 @@
           @change="enableAmount()"
           :disabled="selectAgenciesDisabled"
         >
-          <option value="" disabled selected hidden>Select agency</option>
+          <option value="" disabled selected hidden>SELECT AGENCY</option>
           <option v-for="agency in agencies" :key="agency.agency" :value="agency">
             {{ agency.agency.toUpperCase() + " - Purchase price: " + agency.values.totalAsk }}
           </option>
@@ -37,7 +37,7 @@
           id="cantBuy"
           name="cantBuy"
           v-model="sellBuy.crypto_amount"
-          placeholder="Quantity to buy"
+          placeholder="QUANTITY TO BUY"
           required
           :disabled="setAmountDisabled"
           @input="calculateAmount()"
@@ -49,7 +49,7 @@
           id="amount"
           name="amount"
           v-model="sellBuy.money"
-          placeholder="Value"
+          placeholder="VALUE"
           required
           disabled
         />
@@ -81,7 +81,6 @@ export default {
       setAmountDisabled: true,
     };
   },
-  computed: {},
   methods: {
     buyCripto() {
       if (this.sellBuy.crypto_amount === "") {
@@ -154,13 +153,9 @@ export default {
   margin-bottom: 25px;
   margin-top: 25px;
   height: 42px;
-  outline: 0;
-  border: 0;
-  border-radius: 0;
   background: #f0f0f0;
-  color: #7b7b7b;
   font-size: 1em;
-  color: #999;
+  color: #3f3f3f;
   font-family: "Quicksand", sans-serif;
   border: 2px solid #7b7b7b;
   border-radius: 12px;
@@ -198,13 +193,13 @@ export default {
 }
 .btn {
   box-shadow: none;
-  width: 100%;
+  width: 100px;
   height: 40px;
   padding: 10px;
   text-align: center;
   background-color: #0a70a0;
-  color: #fff;
-  border-radius: 25px;
+  color: #ffffff;
+  border-radius: 15px;
   letter-spacing: 1.3px;
   cursor: pointer;
   transition: background 0.3s ease-in-out;

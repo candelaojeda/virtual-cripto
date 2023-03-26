@@ -4,8 +4,12 @@
       <div class="criptos">
         <h2>SELL VIRTUAL CRIPTOS</h2>
         <div class="select">
-          <select id="standard-select" v-model="sellBuy.crypto_code" required>
-            <option value="" disabled selected hidden>Select cripto</option>
+          <select
+            id="standard-select"
+            v-model="sellBuy.crypto_code"
+            @change="getAgencies(sellBuy.crypto_code)"
+          >
+            <option value="" disabled selected hidden>SELECT CRIPTO</option>
             <option value="BTC">BITCOIN</option>
             <option value="ETH">ETHEREUM</option>
             <option value="USDC">USDC</option>
@@ -14,14 +18,29 @@
           </select>
         </div>
       </div>
+      <div class="select">
+        <select
+          id="standard-select"
+          v-model="selectedAgency"
+          @change="enableAmount()"
+          :disabled="selectAgenciesDisabled"
+        >
+          <option value="" disabled selected hidden>SELECT AGENCY</option>
+          <option v-for="agency in agencies" :key="agency.agency" :value="agency">
+            {{ agency.agency.toUpperCase() + " - Sale price: " + agency.values.totalAsk }}
+          </option>
+        </select>
+      </div>
       <div class="cantVenta">
         <input
           type="number"
           id="cantSale"
-          name="cantBuy"
+          name="cantSale"
           v-model="sellBuy.crypto_amount"
-          placeholder="Quantity to sale"
+          placeholder="QUANTITY TO SALE"
           required
+          :disabled="setAmountDisabled"
+          @input="calculateAmount()"
         />
       </div>
       <div class="pagoVenta">
@@ -30,19 +49,12 @@
           id="amount"
           name="amount"
           v-model="sellBuy.money"
-          placeholder="Value"
+          placeholder="VALUE"
           required
+          disabled
         />
       </div>
-      <div class="fechaVenta">
-        <input
-          type="datetime-local"
-          id="timeHour"
-          name="timeHour"
-          v-model="sellBuy.datetime"
-          required
-        />
-      </div>
+
       <button class="btn" type="submit" @click.prevent="saleCripto">SELL</button>
     </form>
   </div>
@@ -50,6 +62,8 @@
 
 <script>
 import transactions from "@/services/transactions.js";
+import cryptoServices from "../services/criptoServices.js";
+
 export default {
   name: "SaleForm",
   data() {
@@ -62,8 +76,13 @@ export default {
         money: "",
         datetime: "",
       },
+      selectedAgency: "",
+      agencies: [],
+      selectAgenciesDisabled: true,
+      setAmountDisabled: true,
     };
   },
+  computed: {},
   methods: {
     saleCripto() {
       if (this.sellBuy.crypto_amount === "") {
@@ -78,23 +97,39 @@ export default {
         this.$toast.error("You must enter a numeric value.");
       } else if (parseFloat(this.sellBuy.money) <= 0) {
         this.$toast.error("The amount to enter must be greater than 0.");
-      } else if (this.sellBuy.datetime === "") {
-        this.$toast.error("You must enter the date and time of the sale.");
       } else {
+        this.sellBuy.datetime = new Date();
         transactions
           .newTransaction(this.sellBuy)
           .then(() => {
             this.$toast.info("Successfully!");
             this.$store.commit("insertTransactions");
           })
-          .catch(() => {
-            this.$toast.error("Error.");
+          .catch((err) => {
+            this.$toast.error("Error:" + err.message);
           });
       }
     },
+    getAgencies(cripto) {
+      cryptoServices
+        .getAgenciesInformation(cripto)
+        .then((res) => {
+          this.agencies = Object.keys(res.data).map((agency, index) => {
+            return { agency: agency, values: Object.values(res.data)[index] };
+          });
+          this.selectAgenciesDisabled = false;
+        })
+        .catch();
+    },
+    enableAmount() {
+      this.setAmountDisabled = false;
+    },
+    calculateAmount() {
+      this.sellBuy.money = (
+        this.sellBuy.crypto_amount * this.selectedAgency.values.totalAsk
+      ).toFixed(2);
+    },
   },
-  created() {},
-  computed: {},
 };
 </script>
 
@@ -120,13 +155,9 @@ export default {
   margin-bottom: 25px;
   margin-top: 25px;
   height: 42px;
-  outline: 0;
-  border: 0;
-  border-radius: 0;
   background: #f0f0f0;
-  color: #7b7b7b;
   font-size: 1em;
-  color: #999;
+  color: #3f3f3f;
   font-family: "Quicksand", sans-serif;
   border: 2px solid #7b7b7b;
   border-radius: 12px;
@@ -164,11 +195,11 @@ export default {
 }
 .btn {
   box-shadow: none;
-  width: 100%;
+  width: 100px;
   height: 40px;
   background-color: #0a70a0;
-  color: #fff;
-  border-radius: 25px;
+  color: #ffffff;
+  border-radius: 15px;
   letter-spacing: 1.3px;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
