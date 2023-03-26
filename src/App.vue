@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="background">
     <nav>
       <router-link to="/transactions">Purchase-Sale</router-link> |
       <router-link to="/history">View History</router-link> |
-      <router-link to="/status">Actual Status</router-link>
+      <router-link to="/status">Actual Status</router-link> |
+      <router-link to="/investments">Investments</router-link>
       <div class="right">
         <p>
           <b>#{{ $store.state.idUser }}</b>
@@ -40,6 +41,13 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+.background {
+  background-image: url("./assets/img-logo.avif");
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 #app {
   font-family: Poppins;
   -webkit-font-smoothing: antialiased;
@@ -59,18 +67,6 @@ export default {
   background-size: cover;
   z-index: 0;
 }
-/* .body {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  width: auto;
-  height: auto;
-  background-image: url("./assets/img-logo.avif");
-  background-size: cover;
-  z-index: 0;
-} */
 nav {
   padding: 30px;
 }
@@ -88,6 +84,7 @@ nav a.router-link-exact-active {
   text-align: right;
   justify-content: right;
   margin-top: 0px;
+  color: #ffffff;
 }
 p {
   padding: 10px;
@@ -97,7 +94,6 @@ button {
   height: 40px;
   width: 70px;
   background-color: #0a70a0;
-  opacity: 0.8;
   text-align: center;
   align-content: center;
   align-items: center;
@@ -105,18 +101,4 @@ button {
   border-radius: 20px;
   cursor: pointer;
 }
-/* .btn {
-  box-shadow: none;
-  width: 100%;
-  height: 40px;
-  padding: 10px;
-  opacity: 0.8;
-  text-align: center;
-  background-color: #0a70a0;
-  color: #fff;
-  border-radius: 25px;
-  letter-spacing: 1.3px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-} */
 </style>
