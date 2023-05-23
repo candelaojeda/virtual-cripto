@@ -1,18 +1,21 @@
 <template>
   <div class="body">
     <div class="container">
-      <h1>ACTUAL STATUS</h1>
       <table>
         <thead>
           <tr>
             <th>CRIPTOCURRENCY</th>
-            <th>QUANTITY</th>
-            <th>MONEY</th>
+            <th>RESULT</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <p v-for="coin in wallet" :key="coin.crypto_code">{{ coin }}</p>
+            <td>
+              <p v-for="coin in wallet" :key="coin.crypto_code">{{ coin.crypto_code }}</p>
+            </td>
+            <td>
+              <p v-for="coin in wallet" :key="coin.crypto_code">${{ coin.money }}</p>
+            </td>
           </tr>
         </tbody>
       </table>

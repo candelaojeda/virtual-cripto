@@ -1,16 +1,5 @@
 <template>
   <div class="body">
-    <!-- <nav>
-      <div class="view">
-        <button class="btn" id="view" @click="table = true">VIEW HISTORY</button>
-      </div>
-      <div class="modife">
-        <button @click="edit = true">EDIT TRANSACTION</button>
-      </div>
-      <div class="delete">
-        <button>DELETE TRANSACTION</button>
-      </div>
-    </nav> -->
     <div class="container">
       <table v-show="table">
         <thead>
@@ -25,7 +14,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="transaction in transactions" :key="transaction._id">
+          <tr
+            v-for="transaction in transactions"
+            :key="transaction._id"
+            :class="{ selected: selectableRow === transaction._id }"
+          >
             <td>{{ transaction.crypto_code }}</td>
             <td>{{ transaction.crypto_amount }}</td>
             <td>$ {{ transaction.money }}</td>
@@ -33,21 +26,17 @@
             <td>{{ time(transaction.datetime) }}</td>
             <td>{{ hours(transaction.datetime) }}</td>
             <td>
-              <!-- <router-link :to="{ name: 'Edit', query: { id: transaction._id } }">
-                <label @click="editRow" class="editTransaction">Edit |</label>
-              </router-link> -->
-              <label @click="(table = false), (edit = true)" class="editTransaction">Edit |</label>
-              <!-- <router-link :to="{ name: 'Delete', query: { id: transaction._id } }">
-                <label @click="deleteRow" class="deleteTransaction"> Eliminar</label>
-              </router-link> -->
+              <router-link :to="{ name: 'Edit', query: { id: selectableRow } }">
+                <span @click="($event) => row(transaction._id)">Edit </span>
+              </router-link>
               <label @click="deleteRow(transaction._id)" class="editTransaction"> Delete</label>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <div v-show="edit">
-      <EditForm />
+      <div>
+        <button class="btnBack" v-show="enter" @click="enter">BACK TO TRANSACTIONS</button>
+      </div>
     </div>
   </div>
 </template>
@@ -65,6 +54,7 @@ export default {
       countTransaction: 0,
       table: true,
       edit: false,
+      selectableRow: null,
     };
   },
   props: {},
@@ -91,6 +81,9 @@ export default {
     //   if (crypto_code == "cript4") return "USD Coin";
     //   if (crypto_code == "cript5") return "Binance USD";
     // },
+    enter() {
+      this.$router.push("/transactions");
+    },
     time(datetime) {
       return datetime.slice(0, 10);
     },
@@ -109,6 +102,15 @@ export default {
           .catch((err) => {
             this.$toast.error(`Error: ${err}`);
           });
+      }
+    },
+    row(id) {
+      if (this.selectableRow !== id) {
+        this.selectableRow = id;
+        console.log(selectableRow);
+      } else {
+        this.selectableRow = null;
+        console.log(selectableRow);
       }
     },
     // loadTransactions() {
@@ -208,5 +210,15 @@ tbody tr:hover {
   cursor: pointer;
   text-decoration: underline;
   color: #fff;
+}
+.btnBack {
+  width: 300px;
+  height: 50px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 20px;
+  background: #a6d7fd;
+  color: #090274;
 }
 </style>

@@ -7,6 +7,7 @@ const clienteAPI = axios.create({
 
 export default {
   getTransactions(idUser) {
+    console.log("pepito");
     return clienteAPI.get(`/transactions?q={"user_id": "${idUser}"}`);
   },
   getTransactionsById(id) {

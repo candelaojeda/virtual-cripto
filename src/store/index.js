@@ -5,6 +5,7 @@ export default createStore({
   state: {
     idUser: "",
     transactions: [],
+    totalMoneyActualState: null,
   },
   getters: {
     getTransactions: (state) => {
@@ -50,6 +51,9 @@ export default createStore({
         .catch(() => {
           alert("Error!");
         });
+    },
+    modifyTotalMoneyActualState(state, totalMoneyActualState) {
+      state.totalMoneyActualState = totalMoneyActualState;
     },
   },
   actions: {},

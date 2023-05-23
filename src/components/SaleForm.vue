@@ -49,7 +49,7 @@
           id="amount"
           name="amount"
           v-model="sellBuy.money"
-          placeholder="VALUE"
+          placeholder="AMOUNT"
           required
           disabled
         />

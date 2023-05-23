@@ -3,6 +3,7 @@ import Login from "../views/Login.vue";
 import Transactions from "../views/Transactions.vue";
 import History from "../views/History.vue";
 import Investments from "../views/Investments.vue";
+import EditForm from "../components/EditForm.vue";
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: "/investments",
     name: "Investments",
     component: Investments,
+  },
+  {
+    path: "/edit",
+    name: "Edit",
+    component: EditForm,
   },
 ];
 
