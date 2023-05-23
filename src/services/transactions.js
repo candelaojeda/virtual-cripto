@@ -6,19 +6,20 @@ const clienteAPI = axios.create({
 });
 
 export default {
-  getTransacciones(idUser) {
+  getTransactions(idUser) {
+    console.log("pepito");
     return clienteAPI.get(`/transactions?q={"user_id": "${idUser}"}`);
   },
-  getTransaccionesById(id) {
+  getTransactionsById(id) {
     return clienteAPI.get(`/transactions/${id}`);
   },
   newTransaction(sellBuy) {
     return clienteAPI.post("/transactions", sellBuy);
   },
-  modifyTransaccion(id, editTransaction) {
-    return clienteAPI.put(`/transactions/${id}`, editTransaction);
+  modifyTransaction(id, editTransaction) {
+    return clienteAPI.patch(`/transactions/${id}`, editTransaction);
   },
-  deleteTransaccion(id) {
+  deleteTransaction(id) {
     return clienteAPI.delete(`/transactions/${id}`);
   },
 };

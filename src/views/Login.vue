@@ -12,6 +12,7 @@
             v-model="idUser"
             id="idUsuario"
             placeholder="Insert your ID"
+            autocomplete="off"
           />
         </div>
         <button class="btn mt-3" @click="enter">LOGIN</button>
@@ -21,7 +22,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Login",
   data() {
@@ -37,9 +37,9 @@ export default {
         if (this.idUser.length > 10) {
           this.$toast.error("Error! User ID must not contain more than 10 characters.");
         } else {
-          this.$store.commit("modificarIdUsuario", this.idUser);
-          this.$store.commit("cargarTransacciones");
-          this.$router.push("/transactions");
+          this.$store.commit("newUser", this.idUser);
+          this.$store.commit("insertTransactions");
+          this.$router.push({ name: "Transactions" });
         }
       }
     },
